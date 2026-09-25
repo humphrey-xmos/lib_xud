@@ -188,6 +188,45 @@ typedef enum XUD_BusState_t
 #endif
 
 /**
+ * @brief Enable DFU functionality.
+ *
+ * Default: 1 (Enabled)
+ */
+#ifndef XUD_ENABLE_DFU
+#define XUD_ENABLE_DFU              (1)
+#endif
+
+/**
+ * @brief Interface number for the DFU interface on Endpoint0
+ *
+ * This specifies the interface number for the DFU interface on Endpoint0.
+ * Default: 1
+ */
+#ifndef XUD_INTERFACE_NUMBER_DFU
+#define XUD_INTERFACE_NUMBER_DFU 1
+#endif
+
+/**
+ * @brief Enable Vendor specific control interface on Endpoint0
+ *
+ * When enabled, device enumerates with an extra Vendor specific control interface with no associated endpoints
+ * Default: Disabled by default
+ */
+#ifndef XUD_ENABLE_VENDOR_CONTROL
+#define XUD_ENABLE_VENDOR_CONTROL   0
+#endif
+
+/**
+ * @brief Interface number for the Vendor specific control interface on Endpoint0
+ *
+ * This specifies the interface number for the Vendor specific control interface on Endpoint0.
+ * Default: 0
+ */
+#ifndef XUD_INTERFACE_NUMBER_VENDOR_CONTROL
+#define XUD_INTERFACE_NUMBER_VENDOR_CONTROL 0
+#endif
+
+/**
  * @brief Device interface GUID for the MSOS 2.0 Descriptor.
  *
  * This is provided as part of the device registry property in the MSOS 2.0 descriptor.
@@ -195,6 +234,18 @@ typedef enum XUD_BusState_t
  */
 #ifndef XUD_WINUSB_DEVICE_INTERFACE_GUID_CONTROL
 #define XUD_WINUSB_DEVICE_INTERFACE_GUID_CONTROL    "{a008382b-5adc-464f-a849-17500f09074c}"
+#endif
+
+/**
+ * @brief Device interface GUID for the DFU interface.
+ *
+ * This is provided as part of the device registry property in the MSOS 2.0 descriptor.
+ * Default: "{89C14132-D389-4FF7-944E-2E33379BB59D}" User can override by defining their own in xua_conf.h
+ *
+ * \warning This GUID must remain unchanged for DFU to work correctly with the XMOS supplied DFU driver.
+ */
+#ifndef XUD_WINUSB_DEVICE_INTERFACE_GUID_DFU
+#define XUD_WINUSB_DEVICE_INTERFACE_GUID_DFU        "{89C14132-D389-4FF7-944E-2E33379BB59D}"
 #endif
 
 /**
