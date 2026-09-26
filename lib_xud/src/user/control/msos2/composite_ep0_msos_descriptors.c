@@ -77,7 +77,7 @@ MSOS_desc_composite_t desc_ms_os_20_composite =
     {
         .wLength = sizeof(MSOS_desc_fn_subset_header_t),
         .wDescriptorType = MS_OS_20_SUBSET_HEADER_FUNCTION,
-        .bFirstInterface = INTERFACE_NUMBER_MISC_CONTROL,
+        .bFirstInterface = XUD_INTERFACE_NUMBER_MISC_CONTROL,
         .bReserved = 0,
         .wSubsetLength = sizeof(MSOS_desc_fn_subset_header_t) + sizeof(MSOS_desc_compat_id_t) + sizeof(MSOS_desc_registry_property_t)
     },

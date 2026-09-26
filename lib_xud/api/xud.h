@@ -149,6 +149,31 @@ typedef enum XUD_PwrConfig
     XUD_PWR_SELF = XUD_PWR_SELF_VAL
 } XUD_PwrConfig;
 
+#define XUD_CFG_BMATTR_BUS_PWR    0x80
+#define XUD_CFG_BMATTR_SELF_PWR   0xC0
+
+/**
+ * @brief Report as self or bus powered device. This affects descriptors
+ * and XUD usage and is important for USB compliance
+ *
+ * Default: XUD_PWR_BUS
+ */
+#ifndef XUD_POWERMODE
+#define XUD_POWERMODE               XUD_PWR_BUS
+#endif
+
+#define XUD_GET_BMATTR_POWERMODE() ((XUD_POWERMODE == XUD_PWR_BUS) ? XUD_CFG_BMATTR_BUS_PWR : XUD_CFG_BMATTR_SELF_PWR)
+
+/**
+ * \def XUD_BMAX_POWER
+ * \brief Maximum power consumption of the USB device in 2mA units.
+ *
+ * Default: 500/2 (250)
+ */
+#ifndef XUD_BMAX_POWER
+#define XUD_BMAX_POWER              (500/2)
+#endif
+
 typedef enum XUD_Result
 {
     XUD_RES_UPDATE = -1,
@@ -197,16 +222,6 @@ typedef enum XUD_BusState_t
 #endif
 
 /**
- * @brief Interface number for the DFU interface on Endpoint0
- *
- * This specifies the interface number for the DFU interface on Endpoint0.
- * Default: 1
- */
-#ifndef XUD_INTERFACE_NUMBER_DFU
-#define XUD_INTERFACE_NUMBER_DFU 1
-#endif
-
-/**
  * @brief Enable Vendor specific control interface on Endpoint0
  *
  * When enabled, device enumerates with an extra Vendor specific control interface with no associated endpoints
@@ -217,14 +232,52 @@ typedef enum XUD_BusState_t
 #endif
 
 /**
- * @brief Interface number for the Vendor specific control interface on Endpoint0
+ * @brief Interface number for the DFU interface on Endpoint0
  *
- * This specifies the interface number for the Vendor specific control interface on Endpoint0.
- * Default: 0
+ * This specifies the interface number for the DFU interface on Endpoint0.
+ * Default: 1
  */
-#ifndef XUD_INTERFACE_NUMBER_VENDOR_CONTROL
-#define XUD_INTERFACE_NUMBER_VENDOR_CONTROL 0
+#ifndef XUD_INTERFACE_NUMBER_DFU
+#define XUD_INTERFACE_NUMBER_DFU 1
 #endif
+
+/**
+ * @brief Interface number for the Miscellaneous control interface on Endpoint0
+ *
+ * This specifies the interface number for the Miscellaneous control interface on Endpoint0.
+ * Default: 2
+ */
+#ifndef XUD_INTERFACE_NUMBER_MISC_CONTROL
+#define XUD_INTERFACE_NUMBER_MISC_CONTROL 2 // TODO - sort out compiler inclusion etc.
+#endif
+
+/**
+ * @brief Enable Vendor specific control interface to enumerate as WinUSB on Windows
+ *
+ * Allow the Vendor specific control interface, to enumerate as WinUSB on Windows.
+ * Default: Enabled by default. If disabled, manual driver installation for the control interface would
+ * be required on Windows
+ */
+#ifndef XUD_ENUMERATE_CONTROL_INTF_AS_WINUSB
+#define XUD_ENUMERATE_CONTROL_INTF_AS_WINUSB    1
+#endif
+
+#if (XUD_ENABLE_DFU) || (XUD_ENABLE_VENDOR_CONTROL && XUD_ENUMERATE_CONTROL_INTF_AS_WINUSB)
+#ifdef XUD_BCD_USB
+
+#if (XUD_BCD_USB != 0x0201)
+#warning "XUD_BCD_USB is not 0x0201, this may cause compatibility issues with DFU or Vendor Control interfaces."
+#endif
+
+#else
+#define XUD_BCD_USB                 0x0201
+#endif
+
+#else
+#ifndef XUD_BCD_USB
+#define XUD_BCD_USB                 0x0200
+#endif
+#endif /* (XUD_ENABLE_DFU) || (XUD_ENABLE_VENDOR_CONTROL && XUD_ENUMERATE_CONTROL_INTF_AS_WINUSB) */
 
 /**
  * @brief Device interface GUID for the MSOS 2.0 Descriptor.
