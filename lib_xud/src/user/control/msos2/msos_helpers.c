@@ -10,7 +10,6 @@
 #include <string.h>
 
 #include "msos_descriptors.h"
-#include "xud_device.h"
 
 void XUD_Update_Guid_In_Msos_Desc(MSOS_desc_registry_property_t *registry, const char *guid_str)
 {

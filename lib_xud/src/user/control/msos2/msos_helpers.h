@@ -9,9 +9,6 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include "xud.h"
-#include "xud_device.h"
-
 #if defined(__XC__) || defined(__cplusplus)
 extern "C" {
 #endif

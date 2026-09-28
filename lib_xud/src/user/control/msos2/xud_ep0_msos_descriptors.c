@@ -4,7 +4,7 @@
 /* MSOS 2.0 Descriptors for vendor Endpoint 0 handling */
 
 #include "xud.h"
-#if (XUD_ENABLE_DFU) || (XUD_ENABLE_VENDOR_CONTROL && XUD_ENUMERATE_CONTROL_INTF_AS_WINUSB)
+#if (XUD_ENABLE_MSOS_DFU_DESCS) || (XUD_ENABLE_MSOS_CONTROL_DESCS)
 
 #include "xud_ep0_msos_descriptors.h"
 
@@ -15,7 +15,6 @@
 
 #include "msos_descriptors.h"
 #include "msos_helpers.h"
-#include "xud.h"
 #include "xud_device.h"
 
 /** Example of simple, single interface, MSOS 2.0 descriptor */
@@ -79,13 +78,13 @@ typedef struct {
   MSOS_desc_header_t              msos_desc_header;
   MSOS_desc_cfg_subset_header_t   msos_desc_cfg_subset_header;
 
-#if (XUD_ENABLE_VENDOR_CONTROL)
+#if (XUD_ENABLE_MSOS_CONTROL_DESCS)
   MSOS_desc_fn_subset_header_t    msos_fn_subset_header_control;
   MSOS_desc_compat_id_t           msos_desc_compat_id_control;
   MSOS_desc_registry_property_t   msos_desc_registry_property_control;
 #endif
 
-#if XUD_ENABLE_DFU
+#if XUD_ENABLE_MSOS_DFU_DESCS
   MSOS_desc_fn_subset_header_t    msos_fn_subset_header_dfu;
   MSOS_desc_compat_id_t           msos_desc_compat_id_dfu;
   MSOS_desc_registry_property_t   msos_desc_registry_property_dfu;
@@ -129,7 +128,7 @@ MSOS_desc_composite_t desc_ms_os_20_composite =
         .bReserved = 0,
         .wTotalLength = sizeof(MSOS_desc_composite_t) - sizeof(MSOS_desc_header_t)
     },
-  #if (XUD_ENABLE_VENDOR_CONTROL)
+  #if (XUD_ENABLE_MSOS_CONTROL_DESCS)
     .msos_fn_subset_header_control =
     {
         .wLength = sizeof(MSOS_desc_fn_subset_header_t),
@@ -160,7 +159,7 @@ MSOS_desc_composite_t desc_ms_os_20_composite =
     },
 #endif
 
-#if XUD_ENABLE_DFU
+#if XUD_ENABLE_MSOS_DFU_DESCS
     .msos_fn_subset_header_dfu =
     {
         .wLength = sizeof(MSOS_desc_fn_subset_header_t),
@@ -193,29 +192,29 @@ MSOS_desc_composite_t desc_ms_os_20_composite =
 };
 
 /* Device Interface GUID */
-#if XUD_ENABLE_DFU
+#if XUD_ENABLE_MSOS_DFU_DESCS
 static char g_device_interface_guid_dfu_str[DEVICE_INTERFACE_GUID_MAX_STRLEN+1] = XUD_WINUSB_DEVICE_INTERFACE_GUID_DFU;
 #endif
-#if (XUD_ENABLE_VENDOR_CONTROL)
+#if (XUD_ENABLE_MSOS_CONTROL_DESCS)
 static char g_device_interface_guid_control_str[DEVICE_INTERFACE_GUID_MAX_STRLEN + 1] = XUD_WINUSB_DEVICE_INTERFACE_GUID_CONTROL;
 #endif
 
 void XUD_Init_Ep0_Msos_Descriptors(void)
 {
-#if XUD_ENABLE_DFU
+#if XUD_ENABLE_MSOS_DFU_DESCS
     XUD_Update_Guid_In_Msos_Desc(&desc_ms_os_20_composite.msos_desc_registry_property_dfu, g_device_interface_guid_dfu_str);
 #endif
 
-#if (XUD_ENABLE_VENDOR_CONTROL)
+#if (XUD_ENABLE_MSOS_CONTROL_DESCS)
     XUD_Update_Guid_In_Msos_Desc(&desc_ms_os_20_composite.msos_desc_registry_property_control, g_device_interface_guid_control_str);
 #endif
 
-#if (XUD_ENABLE_DFU)
+#if (XUD_ENABLE_MSOS_DFU_DESCS)
     // Apply valid GUID
     if (strnlen(g_device_interface_guid_dfu_str, (DEVICE_INTERFACE_GUID_MAX_STRLEN + 1)) == DEVICE_INTERFACE_GUID_MAX_STRLEN) {
         XUD_Update_Guid_In_Msos_Desc(&desc_ms_os_20_simple.msos_desc_registry_property, g_device_interface_guid_dfu_str);
     }
-#elif (XUD_ENABLE_VENDOR_CONTROL)
+#elif (XUD_ENABLE_MSOS_CONTROL_DESCS)
     if (strnlen(g_device_interface_guid_control_str, (DEVICE_INTERFACE_GUID_MAX_STRLEN + 1)) == DEVICE_INTERFACE_GUID_MAX_STRLEN) {
         XUD_Update_Guid_In_Msos_Desc(&desc_ms_os_20_simple.msos_desc_registry_property, g_device_interface_guid_control_str);
     }

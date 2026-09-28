@@ -213,22 +213,22 @@ typedef enum XUD_BusState_t
 #endif
 
 /**
- * @brief Enable DFU functionality.
+ * @brief Enable MSOS 2.0 DFU descriptor
  *
- * Default: 1 (Enabled)
+ * Default: 0 (Disabled)
  */
-#ifndef XUD_ENABLE_DFU
-#define XUD_ENABLE_DFU              (1)
+#ifndef XUD_ENABLE_MSOS_DFU_DESCS
+#define XUD_ENABLE_MSOS_DFU_DESCS    (0)
 #endif
 
 /**
- * @brief Enable Vendor specific control interface on Endpoint0
+ * @brief Enable MSOS 2.0 Vendor specific control descriptors
  *
- * When enabled, device enumerates with an extra Vendor specific control interface with no associated endpoints
- * Default: Disabled by default
+ * When enabled, the device will include MSOS 2.0 Vendor specific control descriptors in its configuration.
+ * Default: 0 (Disabled)
  */
-#ifndef XUD_ENABLE_VENDOR_CONTROL
-#define XUD_ENABLE_VENDOR_CONTROL   0
+#ifndef XUD_ENABLE_MSOS_CONTROL_DESCS
+#define XUD_ENABLE_MSOS_CONTROL_DESCS   (0)
 #endif
 
 /**
@@ -248,21 +248,10 @@ typedef enum XUD_BusState_t
  * Default: 2
  */
 #ifndef XUD_INTERFACE_NUMBER_MISC_CONTROL
-#define XUD_INTERFACE_NUMBER_MISC_CONTROL 2 // TODO - sort out compiler inclusion etc.
+#define XUD_INTERFACE_NUMBER_MISC_CONTROL 2
 #endif
 
-/**
- * @brief Enable Vendor specific control interface to enumerate as WinUSB on Windows
- *
- * Allow the Vendor specific control interface, to enumerate as WinUSB on Windows.
- * Default: Enabled by default. If disabled, manual driver installation for the control interface would
- * be required on Windows
- */
-#ifndef XUD_ENUMERATE_CONTROL_INTF_AS_WINUSB
-#define XUD_ENUMERATE_CONTROL_INTF_AS_WINUSB    1
-#endif
-
-#if (XUD_ENABLE_DFU) || (XUD_ENABLE_VENDOR_CONTROL && XUD_ENUMERATE_CONTROL_INTF_AS_WINUSB)
+#if (XUD_ENABLE_MSOS_DFU_DESCS) || (XUD_ENABLE_MSOS_CONTROL_DESCS)
 #ifdef XUD_BCD_USB
 
 #if (XUD_BCD_USB != 0x0201)
@@ -277,7 +266,7 @@ typedef enum XUD_BusState_t
 #ifndef XUD_BCD_USB
 #define XUD_BCD_USB                 0x0200
 #endif
-#endif /* (XUD_ENABLE_DFU) || (XUD_ENABLE_VENDOR_CONTROL && XUD_ENUMERATE_CONTROL_INTF_AS_WINUSB) */
+#endif /* (XUD_ENABLE_MSOS_DFU_DESCS) || (XUD_ENABLE_MSOS_CONTROL_DESCS) */
 
 /**
  * @brief Device interface GUID for the MSOS 2.0 Descriptor.

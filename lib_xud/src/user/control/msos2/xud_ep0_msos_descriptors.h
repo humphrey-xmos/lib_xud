@@ -11,7 +11,7 @@
 
 #include "xud.h"
 #include "xud_device.h"
-#if (XUD_ENABLE_DFU) || (XUD_ENABLE_VENDOR_CONTROL && XUD_ENUMERATE_CONTROL_INTF_AS_WINUSB)
+#if (XUD_ENABLE_MSOS_DFU_DESCS) || (XUD_ENABLE_MSOS_CONTROL_DESCS)
 
 /* Example of simple, single interface, MSOS 2.0 descriptor */
 
@@ -56,5 +56,5 @@ XUD_Result_t XUD_GetMsosDescriptor(int32_t num_interfaces, XUD_ep ep0_out, XUD_e
 #if defined(__XC__) || defined(__cplusplus)
 } // extern "C"
 #endif
-#endif // (XUD_ENABLE_DFU) || (XUD_ENABLE_VENDOR_CONTROL && XUD_ENUMERATE_CONTROL_INTF_AS_WINUSB)
+#endif // (XUD_ENABLE_MSOS_DFU_DESCS) || (XUD_ENABLE_MSOS_CONTROL_DESCS)
 #endif
