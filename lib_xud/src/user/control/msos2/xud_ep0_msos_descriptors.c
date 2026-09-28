@@ -6,7 +6,7 @@
 #include "xud.h"
 #if (XUD_ENABLE_DFU) || (XUD_ENABLE_VENDOR_CONTROL && XUD_ENUMERATE_CONTROL_INTF_AS_WINUSB)
 
-#include "simple_ep0_msos_descriptors.h"
+#include "xud_ep0_msos_descriptors.h"
 
 #include <stddef.h>
 #include <stdint.h>

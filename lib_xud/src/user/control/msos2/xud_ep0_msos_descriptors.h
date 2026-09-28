@@ -3,14 +3,15 @@
 
 /* MSOS 2.0 Descriptors for vendor Endpoint 0 handling */
 
-#ifndef _SIMPLE_EP0_MSOS_DESCRIPTORS_H_
-#define _SIMPLE_EP0_MSOS_DESCRIPTORS_H_
+#ifndef XUD_EP0_MSOS_DESCRIPTORS_H
+#define XUD_EP0_MSOS_DESCRIPTORS_H
 
 #include <stddef.h>
 #include <stdint.h>
 
 #include "xud.h"
 #include "xud_device.h"
+#if (XUD_ENABLE_DFU) || (XUD_ENABLE_VENDOR_CONTROL && XUD_ENUMERATE_CONTROL_INTF_AS_WINUSB)
 
 /* Example of simple, single interface, MSOS 2.0 descriptor */
 
@@ -55,5 +56,5 @@ XUD_Result_t XUD_GetMsosDescriptor(int32_t num_interfaces, XUD_ep ep0_out, XUD_e
 #if defined(__XC__) || defined(__cplusplus)
 } // extern "C"
 #endif
-
+#endif // (XUD_ENABLE_DFU) || (XUD_ENABLE_VENDOR_CONTROL && XUD_ENUMERATE_CONTROL_INTF_AS_WINUSB)
 #endif

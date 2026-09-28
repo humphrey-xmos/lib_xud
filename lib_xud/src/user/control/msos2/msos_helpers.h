@@ -19,7 +19,7 @@ extern "C" {
 #if !defined(__XC__)
 /* These types and functions are only available to C code. Due to struct packing requirements in the MSOS descriptors, they cannot be used in XC code.
  * If the endpoint0 code is run in XC, then a small wrapper should be used to initialise the BOS and MSOS descriptors.
- * For single interface example, see `simple_ep0_msos_descriptors.h` */
+ * For single interface example, see `xud_ep0_msos_descriptors.h` */
 
 #include "msos_descriptors.h"
 
