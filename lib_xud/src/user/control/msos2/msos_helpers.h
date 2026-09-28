@@ -34,13 +34,6 @@ typedef struct desc_handle_t
     size_t desc_size;
 } desc_handle_t;
 
-/** Register the application MSOS and BOS descriptors, before enumeration.
- * 
- * \param bos_descs    Pointer to the BOS descriptor handle
- * \param msos_descs   Pointer to the MSOS descriptor handle
- */
-void XUD_RegisterMsosDescriptors(const desc_handle_t *bos_descs, const desc_handle_t *msos_descs);
-
 /** Update the device interface GUID in the MSOS descriptor, before enumeration.
  * 
  * The device MSOS 2.0 GUID is used by the host to bind the correct driver to the device.
@@ -57,40 +50,6 @@ void XUD_RegisterMsosDescriptors(const desc_handle_t *bos_descs, const desc_hand
 void XUD_Update_Guid_In_Msos_Desc(MSOS_desc_registry_property_t *registry, const char *guid_str);
 
 #endif
-
-/** Endpoint0 function to send the BOS descriptor when prompted via a Standard Get request
- * 
- * Request will be Standard Get request (USB_GET_DESCRIPTOR) with wValue high byte == USB_DESCTYPE_BOS
- * 
- * This function verifies the request is `wValue high byte == USB_DESCTYPE_BOS` before sending the BOS descriptor.
- * 
- * \param ep0_out   Endpoint 0 OUT endpoint
- * \param ep0_in    Endpoint 0 IN endpoint
- * \param sp        Pointer to the setup packet of the request
- * 
- * \retval          XUD_RES_ERR if request not handled
- * \retval          XUD_RES_OKAY if successful
- * \retval          XUD_RES_WAIT if transfer in progress
- */
-XUD_Result_t XUD_GetBosDescriptor(XUD_ep ep0_out, XUD_ep ep0_in, const USB_SetupPacket_t *sp);
-
-/** Endpoint0 function to send the MSOS descriptor when prompted via a Vendor Get request
- * 
- * Request will be a Vendor Get request with bRequest == XUD_REQUEST_GET_MSOS_DESCRIPTOR.
- * This constant is defined in xud.h.
- * 
- * This function verifies that the request is `bRequest == XUD_REQUEST_GET_MSOS_DESCRIPTOR` before
- * sending the descriptor.
- * 
- * \param ep0_out   Endpoint 0 OUT endpoint
- * \param ep0_in    Endpoint 0 IN endpoint
- * \param sp        Pointer to the setup packet of the request
- * 
- * \retval          XUD_RES_ERR if request not handled
- * \retval          XUD_RES_OKAY if successful
- * \retval          XUD_RES_WAIT if transfer in progress
- */
-XUD_Result_t XUD_GetMsosDescriptor(XUD_ep ep0_out, XUD_ep ep0_in, const USB_SetupPacket_t *sp);
 
 #if defined(__XC__) || defined(__cplusplus)
 } // extern "C"

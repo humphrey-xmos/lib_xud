@@ -6,6 +6,8 @@ lib_xud change log
 
   * ADDED:    Support for Microsoft OS 2.0 descriptors
   * CHANGED:  Updated documentation
+  * CHANGED:  Included composite MSOS descriptor support, moved from lib_xua,
+    removed XUD_RegisterMsosDescriptors() function
 
 4.0.0
 -----

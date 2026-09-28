@@ -155,8 +155,6 @@ in ``lib_xua`` for use of this feature.
 
 The MSOS 2.0 descriptors are retrieved via requests over Endpoint0, and need some simple preparation before enumeration.
 
-.. doxygenfunction:: XUD_RegisterMsosDescriptors
-
 .. doxygenfunction:: XUD_Update_Guid_In_Msos_Desc
 
 .. doxygenfunction:: XUD_GetBosDescriptor

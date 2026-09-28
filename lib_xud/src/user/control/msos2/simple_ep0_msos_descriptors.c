@@ -220,40 +220,41 @@ void XUD_Init_Ep0_Msos_Descriptors(void)
         XUD_Update_Guid_In_Msos_Desc(&desc_ms_os_20_simple.msos_desc_registry_property, g_device_interface_guid_control_str);
     }
 #endif
-
-    desc_handle_t bos_handle = {
-        (unsigned char*)&desc_bos_simple, sizeof(USB_Descriptor_BOS_t),
-    };
-
-    desc_handle_t msos_handle = {
-        (unsigned char*)&desc_ms_os_20_simple, sizeof(MSOS_desc_simple_t),
-    };
-    XUD_RegisterMsosDescriptors(&bos_handle, &msos_handle);
 }
 
-static desc_handle_t xud_bos_handle = {
+static desc_handle_t bos_handle = {
+    (unsigned char*)&desc_bos_simple, sizeof(USB_Descriptor_BOS_t),
+};
+
+static desc_handle_t msos_handle = {
+    (unsigned char*)&desc_ms_os_20_simple, sizeof(MSOS_desc_simple_t),
+};
+
+static desc_handle_t composite_bos_handle = {
     (unsigned char*)&desc_bos_composite, sizeof(USB_Descriptor_BOS_t),
 };
 
-static desc_handle_t xud_msos_handle = {
+static desc_handle_t composite_msos_handle = {
     (unsigned char*)&desc_ms_os_20_composite, sizeof(MSOS_desc_composite_t),
 };
 
-XUD_Result_t XUD_GetCompositeBosDescriptor(XUD_ep ep0_out, XUD_ep ep0_in, USB_SetupPacket_t *sp)
+XUD_Result_t XUD_GetBosDescriptor(int32_t num_interfaces, XUD_ep ep0_out, XUD_ep ep0_in, USB_SetupPacket_t *sp)
 {
-    // Use composite MSOS descriptor
-    if (xud_bos_handle.desc_ptr != NULL) {
-        return XUD_DoGetRequest(ep0_out, ep0_in, xud_bos_handle.desc_ptr, xud_bos_handle.desc_size, sp->wLength);
+    if ((num_interfaces == 1) && (bos_handle.desc_ptr != NULL)) {
+        return XUD_DoGetRequest(ep0_out, ep0_in, bos_handle.desc_ptr, bos_handle.desc_size, sp->wLength);
+    } else if ((num_interfaces > 1) && (composite_bos_handle.desc_ptr != NULL)) {
+        return XUD_DoGetRequest(ep0_out, ep0_in, composite_bos_handle.desc_ptr, composite_bos_handle.desc_size, sp->wLength);
     } else {
         return XUD_RES_ERR;
     }
 }
 
-XUD_Result_t XUD_GetCompositeMsosDescriptor(XUD_ep ep0_out, XUD_ep ep0_in, USB_SetupPacket_t *sp)
+XUD_Result_t XUD_GetMsosDescriptor(int32_t num_interfaces, XUD_ep ep0_out, XUD_ep ep0_in, USB_SetupPacket_t *sp)
 {
-    // Use composite MSOS descriptor
-    if (xud_msos_handle.desc_ptr != NULL) {
-        return XUD_DoGetRequest(ep0_out, ep0_in, xud_msos_handle.desc_ptr, xud_msos_handle.desc_size, sp->wLength);
+    if ((num_interfaces == 1) && (msos_handle.desc_ptr != NULL)) {
+        return XUD_DoGetRequest(ep0_out, ep0_in, msos_handle.desc_ptr, msos_handle.desc_size, sp->wLength);
+    } else if ((num_interfaces > 1) && (composite_msos_handle.desc_ptr != NULL)) {
+        return XUD_DoGetRequest(ep0_out, ep0_in, composite_msos_handle.desc_ptr, composite_msos_handle.desc_size, sp->wLength);
     } else {
         return XUD_RES_ERR;
     }

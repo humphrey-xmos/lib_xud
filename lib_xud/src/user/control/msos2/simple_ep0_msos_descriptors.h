@@ -25,6 +25,7 @@ void XUD_Init_Ep0_Msos_Descriptors(void);
  * 
  * Request will be Standard Get request (USB_GET_DESCRIPTOR) with wValue high byte == USB_DESCTYPE_BOS
  * 
+ * \param num_interfaces  Number of interfaces in the device
  * \param ep0_out   Endpoint 0 OUT endpoint
  * \param ep0_in    Endpoint 0 IN endpoint
  * \param sp        Pointer to the setup packet of the request
@@ -33,13 +34,14 @@ void XUD_Init_Ep0_Msos_Descriptors(void);
  * \retval          XUD_RES_OKAY if successful
  * \retval          XUD_RES_WAIT if transfer in progress
  */
-XUD_Result_t XUD_GetCompositeBosDescriptor(XUD_ep ep0_out, XUD_ep ep0_in, USB_SetupPacket_t *sp);
+XUD_Result_t XUD_GetBosDescriptor(int32_t num_interfaces, XUD_ep ep0_out, XUD_ep ep0_in, USB_SetupPacket_t *sp);
 
 /** Function to send the MSOS descriptor when prompted via a Vendor Get request
  * 
  * Request will be a Vendor Get request with bRequest == XUA_REQUEST_GET_MSOS_DESCRIPTOR.
  * This is defined in xua_conf_default.h
  * 
+ * \param num_interfaces  Number of interfaces in the device
  * \param ep0_out   Endpoint 0 OUT endpoint
  * \param ep0_in    Endpoint 0 IN endpoint
  * \param sp        Pointer to the setup packet of the request
@@ -48,7 +50,7 @@ XUD_Result_t XUD_GetCompositeBosDescriptor(XUD_ep ep0_out, XUD_ep ep0_in, USB_Se
  * \retval          XUD_RES_OKAY if successful
  * \retval          XUD_RES_WAIT if transfer in progress
  */
-XUD_Result_t XUD_GetCompositeMsosDescriptor(XUD_ep ep0_out, XUD_ep ep0_in, USB_SetupPacket_t *sp);
+XUD_Result_t XUD_GetMsosDescriptor(int32_t num_interfaces, XUD_ep ep0_out, XUD_ep ep0_in, USB_SetupPacket_t *sp);
 
 #if defined(__XC__) || defined(__cplusplus)
 } // extern "C"
