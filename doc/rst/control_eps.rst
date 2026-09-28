@@ -146,7 +146,7 @@ automatic driver installation on Windows hosts for devices that support this fea
    MSOS 2.0 descriptors are only supported in C code, not XC. This is due to structure packing requirements.
    The following functions are available if the application Endpoint0 function is written in C.
    However, XC applications can still make use of MSOS 2.0 descriptors by implementing
-   a simple wrapper. See :c:func:`XUD_Init_Simple_Ep0_Msos_Descriptors` for more details.
+   a simple wrapper. See :c:func:`XUD_Init_Ep0_Msos_Descriptors` for more details.
 
 A detailed explanation of MSOS 2.0 descriptors is beyond the scope of this documentation.
 Please see the official Microsoft documentation for more details. Also, see the application note 
@@ -175,7 +175,7 @@ MSOS 2.0 Example Wrapper
 
 A simple example wrapper function is provided to aid XC applications in implementing MSOS 2.0 support.
 
-.. doxygenfunction:: XUD_Init_Simple_Ep0_Msos_Descriptors
+.. doxygenfunction:: XUD_Init_Ep0_Msos_Descriptors
 
 Control Endpoint Example
 ========================

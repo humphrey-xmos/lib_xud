@@ -12,17 +12,43 @@
 #include "xud.h"
 #include "xud_device.h"
 
-/* Example of simple, single interface, MSOS 2.0 descriptor
- * 
- * For more complex examples, see lib_xua DFU and Control in xua_ep0_msos_descriptors.h
- */
+/* Example of simple, single interface, MSOS 2.0 descriptor */
 
 #if defined(__XC__) || defined(__cplusplus)
 extern "C" {
 #endif
 
 /** Initialise the Simple Ep0 MSOS Descriptors before enumeration of the device */
-void XUD_Init_Simple_Ep0_Msos_Descriptors(void);
+void XUD_Init_Ep0_Msos_Descriptors(void);
+
+/** Function to send the BOS descriptor when prompted via a Standard Get request
+ * 
+ * Request will be Standard Get request (USB_GET_DESCRIPTOR) with wValue high byte == USB_DESCTYPE_BOS
+ * 
+ * \param ep0_out   Endpoint 0 OUT endpoint
+ * \param ep0_in    Endpoint 0 IN endpoint
+ * \param sp        Pointer to the setup packet of the request
+ * 
+ * \retval          XUD_RES_ERR if request not handled
+ * \retval          XUD_RES_OKAY if successful
+ * \retval          XUD_RES_WAIT if transfer in progress
+ */
+XUD_Result_t XUD_GetCompositeBosDescriptor(XUD_ep ep0_out, XUD_ep ep0_in, USB_SetupPacket_t *sp);
+
+/** Function to send the MSOS descriptor when prompted via a Vendor Get request
+ * 
+ * Request will be a Vendor Get request with bRequest == XUA_REQUEST_GET_MSOS_DESCRIPTOR.
+ * This is defined in xua_conf_default.h
+ * 
+ * \param ep0_out   Endpoint 0 OUT endpoint
+ * \param ep0_in    Endpoint 0 IN endpoint
+ * \param sp        Pointer to the setup packet of the request
+ * 
+ * \retval          XUD_RES_ERR if request not handled
+ * \retval          XUD_RES_OKAY if successful
+ * \retval          XUD_RES_WAIT if transfer in progress
+ */
+XUD_Result_t XUD_GetCompositeMsosDescriptor(XUD_ep ep0_out, XUD_ep ep0_in, USB_SetupPacket_t *sp);
 
 #if defined(__XC__) || defined(__cplusplus)
 } // extern "C"

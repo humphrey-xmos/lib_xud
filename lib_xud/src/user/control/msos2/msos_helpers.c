@@ -53,7 +53,7 @@ XUD_Result_t XUD_GetBosDescriptor(XUD_ep ep0_out, XUD_ep ep0_in, const USB_Setup
 {
     XUD_Result_t result = XUD_RES_ERR;
 
-    if ((bos_handle.desc_ptr != NULL) && ((sp->wValue & 0xff00) == (USB_DESCTYPE_BOS << 8))) {
+    if (bos_handle.desc_ptr != NULL) {
         result = XUD_DoGetRequest(ep0_out, ep0_in, bos_handle.desc_ptr, bos_handle.desc_size, sp->wLength);
     }
     return result;
@@ -63,7 +63,7 @@ XUD_Result_t XUD_GetMsosDescriptor(XUD_ep ep0_out, XUD_ep ep0_in, const USB_Setu
 {
     XUD_Result_t result = XUD_RES_ERR;
 
-    if ((msos_handle.desc_ptr != NULL) && (sp->wIndex == MS_OS_20_DESCRIPTOR_INDEX)) {
+    if (msos_handle.desc_ptr != NULL) {
         result = XUD_DoGetRequest(ep0_out, ep0_in, msos_handle.desc_ptr, msos_handle.desc_size, sp->wLength);
     }
     return result;
