@@ -1,13 +1,20 @@
 lib_xud change log
 ==================
 
+UNRELEASED
+----------
+
+  * ADDED:    Defines for building standard USB and Microsoft OS 2.0
+    descriptors.
+  * CHANGED:    Extended support for Microsoft OS 2.0 control descriptors,
+    combined with composite device descriptor support from ``lib_xua``.
+  * REMOVED:  XUD_RegisterMsosDescriptors() function.
+
 4.0.1
 -----
 
   * ADDED:    Support for Microsoft OS 2.0 descriptors
   * CHANGED:  Updated documentation
-  * CHANGED:  Included composite MSOS descriptor support, moved from lib_xua,
-    removed XUD_RegisterMsosDescriptors() function
 
 4.0.0
 -----
