@@ -11,7 +11,7 @@
 
 #include "xud.h"
 #include "xud_device.h"
-#if (XUD_ENABLE_MSOS_DFU_DESCS) || (XUD_ENABLE_MSOS_CONTROL_DESCS)
+#if (XUD_ENABLE_MSOS_DFU_DESCS) || (XUD_ENABLE_MSOS_CONTROL_DESCS) || (__DOXYGEN__)
 
 /* Example of simple, single interface, MSOS 2.0 descriptor */
 
