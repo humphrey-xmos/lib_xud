@@ -239,6 +239,10 @@ static desc_handle_t composite_msos_handle = {
 
 XUD_Result_t XUD_GetBosDescriptor(int32_t num_interfaces, XUD_ep ep0_out, XUD_ep ep0_in, USB_SetupPacket_t *sp)
 {
+    if ((sp->bRequest != USB_GET_DESCRIPTOR) || ((sp->wValue & 0xff00) != (USB_DESCTYPE_BOS << 8))) {
+        return XUD_RES_ERR;
+    }
+
     if ((num_interfaces == 1) && (bos_handle.desc_ptr != NULL)) {
         return XUD_DoGetRequest(ep0_out, ep0_in, bos_handle.desc_ptr, bos_handle.desc_size, sp->wLength);
     } else if ((num_interfaces > 1) && (composite_bos_handle.desc_ptr != NULL)) {
@@ -250,6 +254,10 @@ XUD_Result_t XUD_GetBosDescriptor(int32_t num_interfaces, XUD_ep ep0_out, XUD_ep
 
 XUD_Result_t XUD_GetMsosDescriptor(int32_t num_interfaces, XUD_ep ep0_out, XUD_ep ep0_in, USB_SetupPacket_t *sp)
 {
+    if ((sp->bRequest != XUD_REQUEST_GET_MSOS_DESCRIPTOR) || (sp->wIndex != MS_OS_20_DESCRIPTOR_INDEX)) {
+        return XUD_RES_ERR;
+    }
+
     if ((num_interfaces == 1) && (msos_handle.desc_ptr != NULL)) {
         return XUD_DoGetRequest(ep0_out, ep0_in, msos_handle.desc_ptr, msos_handle.desc_size, sp->wLength);
     } else if ((num_interfaces > 1) && (composite_msos_handle.desc_ptr != NULL)) {
