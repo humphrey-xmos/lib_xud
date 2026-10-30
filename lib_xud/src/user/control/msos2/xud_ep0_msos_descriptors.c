@@ -237,7 +237,7 @@ static desc_handle_t composite_msos_handle = {
     (unsigned char*)&desc_ms_os_20_composite, sizeof(MSOS_desc_composite_t),
 };
 
-XUD_Result_t XUD_GetBosDescriptor(int32_t num_interfaces, XUD_ep ep0_out, XUD_ep ep0_in, USB_SetupPacket_t *sp)
+XUD_Result_t XUD_GetBosDescriptor(int32_t num_interfaces, XUD_ep ep0_out, XUD_ep ep0_in, const USB_SetupPacket_t *sp)
 {
     if ((sp->bRequest != USB_GET_DESCRIPTOR) || ((sp->wValue & 0xff00) != (USB_DESCTYPE_BOS << 8))) {
         return XUD_RES_ERR;
@@ -252,7 +252,7 @@ XUD_Result_t XUD_GetBosDescriptor(int32_t num_interfaces, XUD_ep ep0_out, XUD_ep
     }
 }
 
-XUD_Result_t XUD_GetMsosDescriptor(int32_t num_interfaces, XUD_ep ep0_out, XUD_ep ep0_in, USB_SetupPacket_t *sp)
+XUD_Result_t XUD_GetMsosDescriptor(int32_t num_interfaces, XUD_ep ep0_out, XUD_ep ep0_in, const USB_SetupPacket_t *sp)
 {
     if ((sp->bRequest != XUD_REQUEST_GET_MSOS_DESCRIPTOR) || (sp->wIndex != MS_OS_20_DESCRIPTOR_INDEX)) {
         return XUD_RES_ERR;

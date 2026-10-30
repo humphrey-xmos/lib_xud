@@ -38,7 +38,7 @@ void XUD_Init_Ep0_Msos_Descriptors(void);
  * \retval          XUD_RES_OKAY if successful
  * \retval          XUD_RES_WAIT if transfer in progress
  */
-XUD_Result_t XUD_GetBosDescriptor(int32_t num_interfaces, XUD_ep ep0_out, XUD_ep ep0_in, USB_SetupPacket_t *sp);
+XUD_Result_t XUD_GetBosDescriptor(int32_t num_interfaces, XUD_ep ep0_out, XUD_ep ep0_in, const USB_SetupPacket_t *sp);
 
 /** Function to send the MSOS descriptor when prompted via a Vendor Get request.
  * 
@@ -54,7 +54,7 @@ XUD_Result_t XUD_GetBosDescriptor(int32_t num_interfaces, XUD_ep ep0_out, XUD_ep
  * \retval          XUD_RES_OKAY if successful
  * \retval          XUD_RES_WAIT if transfer in progress
  */
-XUD_Result_t XUD_GetMsosDescriptor(int32_t num_interfaces, XUD_ep ep0_out, XUD_ep ep0_in, USB_SetupPacket_t *sp);
+XUD_Result_t XUD_GetMsosDescriptor(int32_t num_interfaces, XUD_ep ep0_out, XUD_ep ep0_in, const USB_SetupPacket_t *sp);
 
 #if defined(__XC__) || defined(__cplusplus)
 } // extern "C"
